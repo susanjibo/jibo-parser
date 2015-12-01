@@ -11,7 +11,11 @@ var extract = require('extract-zip');
 var libs = path.resolve(__dirname, 'deps', process.platform, 'lib');
 
 var downloadUrl = 'http://repository.jibo.com/sdk/jibo-nlu-js/';
-var target = 'jibo-nlu-js-v' + version + '-' + process.platform + '.zip';
+var platform;
+if(process.platform === 'win32' || process.platform === 'win64') {
+    platform = 'win64';
+}
+var target = 'jibo-nlu-js-v' + version + '-' + platform + '.zip';
 var targetDir = 'jibo-nlu-js';
 downloadUrl += target;
 
@@ -38,10 +42,8 @@ fs.remove(cacheDir, function() {
                 console.error(err);
                 return;
             }
-            var files = fs.readdirSync(path.join(cacheDir, targetDir));
             fs.copySync(path.join(cacheDir, targetDir), __dirname, {clobber: true});
-
-            //fs.remove(cacheDir, function() {});
+            fs.remove(cacheDir, function() {});
         });
     });
 });
