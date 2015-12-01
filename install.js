@@ -15,6 +15,9 @@ var platform;
 if(process.platform === 'win32' || process.platform === 'win64') {
     platform = 'win64';
 }
+else {
+    platform = process.platform;
+}
 var target = 'jibo-nlu-js-v' + version + '-' + platform + '.zip';
 var targetDir = 'jibo-nlu-js';
 downloadUrl += target;
