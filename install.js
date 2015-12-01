@@ -1,5 +1,5 @@
+var fs = require('fs-extra');
 var mv = require('mv');
-var fs = require('fs');
 var path = require('path');
 var version = require('./package').version;
 var nugget = require('nugget');
@@ -12,6 +12,7 @@ var libs = path.resolve(__dirname, 'deps', process.platform, 'lib');
 
 var downloadUrl = 'http://repository.jibo.com/sdk/jibo-nlu-js/';
 var target = 'jibo-nlu-js-v' + version + '-' + process.platform + '.zip';
+var targetDir = 'jibo-nlu-js';
 downloadUrl += target;
 
 var cacheDir = path.join(homePath(), '.jibo', 'tmp');
@@ -28,29 +29,22 @@ var opts = {
     resume: true
 };
 
-console.log(downloadUrl);
-
-nugget(downloadUrl, opts, function(err) {
-    if(err) {
-        console.error(err);
-        return;
-    }
-    extract(path.join(cacheDir, target), {dir: cacheDir}, function (err) {
-        if(err) {
+fs.remove(cacheDir, function() {
+    nugget(downloadUrl, opts, function (err) {
+        if (err) {
             console.error(err);
             return;
         }
-        mv(path.join(cacheDir, targetDir), path.join(cacheDir, 'jibo-parser'), {mkdirp: true}, function(err) {
-            if(err) {
-                console.log(err);
+        extract(path.join(cacheDir, target), {dir: cacheDir}, function (err) {
+            if (err) {
+                console.error(err);
                 return;
             }
-            mv(path.join(cacheDir, 'jibo-parser'), path.join(__dirname, '..'), {mkdirp: true}, function(err) {
-                if(err) {
-                    console.log(err);
-                }
-            });
-        });
 
+            fs.copySync(path.join(cacheDir, targetDir), path.join(cacheDir, 'jibo-parser'), {clobber: true});
+            fs.copySync(path.join(cacheDir, 'jibo-parser'), path.join(__dirname, '..'), {clobber: true});
+            fs.remove(cacheDir, function() {});
+        });
     });
 });
+
