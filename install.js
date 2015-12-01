@@ -1,3 +1,4 @@
+var mv = require('mv');
 var fs = require('fs');
 var path = require('path');
 var version = require('./package').version;
@@ -9,18 +10,9 @@ var extract = require('extract-zip');
 
 var libs = path.resolve(__dirname, 'deps', process.platform, 'lib');
 
-var downloadUrl;
-var target = 'jibo-nlu-js-v' + version + '-darwin.zip';
-
-if(process.platform === 'darwin') {
-    downloadUrl = 'http://repository.jibo.com/sdk/jibo-nlu-js/' + target;
-}
-else if(process.platform === 'linux') {
-
-}
-else if(process.platform === 'win32') {
-
-}
+var downloadUrl = 'http://repository.jibo.com/sdk/jibo-nlu-js/';
+var target = 'jibo-nlu-js-v' + version + '-' + process.platform + '.zip';
+downloadUrl += target;
 
 var cacheDir = path.join(homePath(), '.jibo', 'tmp');
 var exists = pathExists.sync(cacheDir);
@@ -43,9 +35,22 @@ nugget(downloadUrl, opts, function(err) {
         console.error(err);
         return;
     }
-    extract(path.join(cacheDir, target), {dir: path.join(__dirname, '..')}, function (err) {
-        if(!err) {
-            console.log('done')
+    extract(path.join(cacheDir, target), {dir: cacheDir}, function (err) {
+        if(err) {
+            console.error(err);
+            return;
         }
+        mv(path.join(cacheDir, targetDir), path.join(cacheDir, 'jibo-parser'), {mkdirp: true}, function(err) {
+            if(err) {
+                console.log(err);
+                return;
+            }
+            mv(path.join(cacheDir, 'jibo-parser'), path.join(__dirname, '..'), {mkdirp: true}, function(err) {
+                if(err) {
+                    console.log(err);
+                }
+            });
+        });
+
     });
 });
