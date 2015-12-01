@@ -16,10 +16,6 @@ var targetDir = 'jibo-nlu-js';
 downloadUrl += target;
 
 var cacheDir = path.join(homePath(), '.jibo', 'tmp');
-var exists = pathExists.sync(cacheDir);
-if(!exists) {
-    mkdir.sync(cacheDir);
-}
 
 var opts = {
     target: target,
@@ -29,7 +25,9 @@ var opts = {
     resume: true
 };
 
+
 fs.remove(cacheDir, function() {
+    fs.mkdirsSync(cacheDir);
     nugget(downloadUrl, opts, function (err) {
         if (err) {
             console.error(err);
@@ -40,10 +38,10 @@ fs.remove(cacheDir, function() {
                 console.error(err);
                 return;
             }
-
-            fs.copySync(path.join(cacheDir, targetDir), path.join(cacheDir, 'jibo-parser'), {clobber: true});
-            fs.copySync(path.join(cacheDir, 'jibo-parser'), path.join(__dirname, '..'), {clobber: true});
-            fs.remove(cacheDir, function() {});
+            var files = fs.readdirSync(path.join(cacheDir, targetDir));
+            fs.copySync(path.join(cacheDir, targetDir), __dirname, {clobber: true});
+           
+            //fs.remove(cacheDir, function() {});
         });
     });
 });
