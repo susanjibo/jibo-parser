@@ -40,7 +40,7 @@ fs.remove(cacheDir, function() {
             }
             var files = fs.readdirSync(path.join(cacheDir, targetDir));
             fs.copySync(path.join(cacheDir, targetDir), __dirname, {clobber: true});
-           
+
             //fs.remove(cacheDir, function() {});
         });
     });
