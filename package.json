@@ -1,0 +1,24 @@
+{
+  "name": "jibo-parser",
+  "version": "0.6.1",
+  "description": "JavaScript wrapper for the Jibo Robust Parser",
+  "main": "lib/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.jibo.com:speech/jibo-nlu-js.git"
+  },
+  "author": "Ramon Prieto",
+  "license": "SEE LICENSE IN license.txt",
+  "gypfile": true,
+  "dependencies": {
+    "extract-zip": "^1.2.0",
+    "home-path": "^1.0.1",
+    "mkdirp": "^0.5.1",
+    "nugget": "^1.6.0",
+    "path-exists": "^2.1.0"
+  }
+}
