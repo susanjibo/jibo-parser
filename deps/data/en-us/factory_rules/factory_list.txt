@@ -1,4 +1,0 @@
-factory:city_state
-factory:date
-factory:state
-factory:time
