@@ -13,7 +13,7 @@ var libs = path.resolve(__dirname, 'deps', process.platform, 'lib');
 var downloadUrl = 'http://repository.jibo.com/sdk/jibo-nlu-js/';
 var platform;
 if(process.platform === 'win32' || process.platform === 'win64') {
-    platform = 'win64';
+    platform = 'win32';
 }
 else {
     platform = process.platform;
