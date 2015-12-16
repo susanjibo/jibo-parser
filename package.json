@@ -2,7 +2,7 @@
   "name": "jibo-parser",
   "version": "0.7.6",
   "description": "JavaScript wrapper for the Jibo Robust Parser",
-  "main": "lib/main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node install.js"
