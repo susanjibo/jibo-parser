@@ -10,7 +10,7 @@ var extract = require('extract-zip');
 
 var libs = path.resolve(__dirname, 'deps', process.platform, process.arch,'lib');
 
-var downloadUrl = 'http://repository.jibo.com/nlu/jibo-nlu-js/';
+var downloadUrl = require('./download').url;
 var platform = process.platform;
 var arch = process.arch
 if (platform == 'win32') {
