@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.jibo.com:speech/jibo-nlu-js.git"
+    "url": "git@github.jibo.com:speech/jibo-parser.git"
   },
   "author": "Ramon Prieto",
   "license": "SEE LICENSE IN license.txt",
