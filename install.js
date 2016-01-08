@@ -12,7 +12,7 @@ var extract = require('extract-zip');
 
 var downloadUrl = require('./download').url;
 var platform = process.platform;
-var arch = getArch();
+var arch = _getArch();
 
 function _fileExists(filePath)
 {
