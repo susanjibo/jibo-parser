@@ -28,7 +28,7 @@ function _getArch() {
     // see if there is an os-arch.json file in our parent directory with our platform defined
     if (platform === 'win32') {
 
-        var osArchFile = '../../os-config.json';
+        var osArchFile = '../../os-arch.json';
 
         if (_fileExists(osArchFile)) {
             var contents = fs.readFileSync(osArchFile);
