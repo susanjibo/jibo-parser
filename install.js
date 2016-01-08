@@ -1,14 +1,9 @@
 var fs = require('fs-extra');
-//var mv = require('mv');
 var path = require('path');
 var version = require('./package').version;
 var nugget = require('nugget');
 var homePath = require('home-path');
-//var mkdir = require('mkdirp');
-//var pathExists = require('path-exists');
 var extract = require('extract-zip');
-
-//var libs = path.resolve(__dirname, 'deps', process.platform, process.arch,'lib');
 
 var downloadUrl = require('./download').url;
 var platform = process.platform;
@@ -25,28 +20,28 @@ function _fileExists(filePath)
 }
 
 function _getArch() {
-    // see if there is an os-arch.json file in our parent directory with our platform defined
+
     if (platform === 'win32') {
-
+        // Windows needs special love as Atom is 32-bit only (as of 1.2.4) but electron can be 64-bit
+        // see if there is an os-arch.json file in our parent directory with our platform defined
         var osArchFile = '../../os-arch.json';
-
         if (_fileExists(osArchFile)) {
             var contents = fs.readFileSync(osArchFile);
             var config = undefined;
             try {
                 config = JSON.parse(contents);
                 if (config && config.win32) {
-                    console.log(osArchFile + " and win32 exists (using " + config.win32 + ")");
+                  // console.log(osArchFile + " and win32 exists (using " + config.win32 + ")");
                     return config.win32;
                 }
             }
             catch (err) {
-                console.log(osArchFile + " is not JSON so using " + config.win32);
+                //console.log(osArchFile + " is not JSON so using " + config.win32);
                 return process.arch;
             }
         }
         else {
-            console.log(osArchFile + " DOES NOT exist (using " + process.arch + ")");
+            //console.log(osArchFile + " DOES NOT exist (using " + process.arch + ")");
             return process.arch;
         }
     } else if (platform === 'linux') {
@@ -57,7 +52,7 @@ function _getArch() {
         return 'x64';
     }
 
-    console.log("Fall back to " + process.arch);
+    //console.log("Fall back to " + process.arch);
     return process.arch;
 }
 
